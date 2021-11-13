@@ -33,6 +33,11 @@ export class ProductComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.productForm.valid) {
+      const total =
+        this.productForm.get('prices').value *
+        this.productForm.get('quantity').value;
+      this.productForm.patchValue({ total: total });
+      console.log(total);
     }
   }
   prices: any;
@@ -41,12 +46,5 @@ export class ProductComponent implements OnInit {
     this.prices = this.ProductList.find((pro) => pro.product == price).price;
     this.productForm.patchValue({ prices: this.prices });
   }
-  calculate() {
-    debugger;
-    const total =
-      this.productForm.get('prices').value *
-      this.productForm.get('quantity').value;
-    this.productForm.patchValue({ total: total });
-    console.log(total);
-  }
+  calculate() {}
 }
