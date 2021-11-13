@@ -1,0 +1,86 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-7 mx-auto">
+      <div class="card border-0 shadow rounded-3 my-5">
+        <div class="card-body p-5 p-sm-5">
+          <div class="row align-items-center pt-4 pb-3">
+            <div class="col-md-4 ps-5">
+              <h6 class="mb-0">Product Name:</h6>
+            </div>
+            <div class="col-md-8 pe-5">
+              <select
+                formControlName="name"
+                class="form-control form-control-lg"
+                (change)="changeProducts($event)"
+                [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+              >
+                <option value="" disabled="" selected=""></option>
+                <option *ngFor="let count of ProductList">
+                  {{ count.product }}
+                </option>
+              </select>
+              <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <div *ngIf="f.name.errors.required">
+                  Product Name is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row align-items-center pt-4 pb-3">
+            <div class="col-md-4 ps-5">
+              <h6 class="mb-0">Unit price:</h6>
+            </div>
+            <div class="col-md-8 pe-5">
+              <input
+                type="text"
+                formControlName="prices"
+                class="form-control form-control-lg"
+              />
+            </div>
+          </div>
+          <div class="row align-items-center pt-3 pb-3">
+            <div class="col-md-4 ps-5">
+              <h6 class="mb-0">Quantity:</h6>
+            </div>
+            <div class="col-md-4 pe-5">
+              <input
+                type="number"
+                formControlName="quantity"
+                class="form-control form-control-lg"
+                [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }"
+                min="0"
+              />
+              <div
+                *ngIf="submitted && f.quantity.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.quantity.errors.required">
+                  quantity is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="px-4 py-4">
+            <button
+              (click)="calculate()"
+              type="submit"
+              class="btn btn-primary btn-lg"
+            >
+              Get Total
+            </button>
+          </div>
+          <hr />
+
+          <div class="row align-items-center pt-3 pb-3">
+            <div class="col-md-8 ps-5">
+              <h6 class="mb-0">
+                Total Amount:{{ this.productForm.get("total").value }}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
